@@ -45,6 +45,9 @@ class Coordinate implements Point {
   void printInfo() => print("x: $x, y: $y"); // 成员函数需要重新定义
 }
 
+// with关键字实现混入
+class Coordinate2 with Point {}
+
 main() {
   // hello world
   print("hello world");
@@ -98,7 +101,11 @@ main() {
     ..y = 2;
   c.printInfo();
   print(c is Point); // true
-  print(c is Coordinate); // false
+  print(c is Coordinate); // true
+
+  var c2 = Coordinate2();
+  c2.printInfo();
+  print(c2 is Point); // true
 }
 
 printNum() {
