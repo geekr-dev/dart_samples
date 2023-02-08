@@ -1,11 +1,74 @@
+bool isZero(int number) {
+  return number == 0;
+}
+
+void printInfo(int number, Function check) {
+  print("$number is zero: ${check(number)}");
+}
+
+//要达到可选命名参数的用法，那就在定义函数的时候给参数加上 {}
+void enable1Flags({required bool bold, bool? hidden}) =>
+    print("$bold , $hidden");
+
+//定义可选命名参数时增加默认值
+void enable2Flags({bool bold = true, bool hidden = false}) =>
+    print("$bold ,$hidden");
+
+//可忽略的参数在函数定义时用[]符号指定
+void enable3Flags(bool bold, [bool? hidden]) => print("$bold ,$hidden");
+
+//定义可忽略参数时增加默认值
+void enable4Flags(bool bold, [bool hidden = false]) => print("$bold ,$hidden");
+
+class Point {
+  num x, y, z;
+  static num factor = 0;
+  // 等同于 this.x = x, this.y = y
+  Point(this.x, this.y) : z = 0;
+  Point.bottom(num x) : this(x, 0); // 重定向构造函数
+  void printInfo() => print("x: $x, y: $y, z: $z");
+  static void printFactor() => print(factor);
+}
+
 main() {
+  // hello world
   print("hello world");
+
+  // 基本类型
   printNum();
   printBool();
   printString();
   printList();
   printMap();
+
+  // 常量
   printConstant();
+
+  // 函数
+  Function f = isZero;
+  int x = 10;
+  int y = 0;
+  printInfo(x, f);
+  printInfo(y, f);
+  //可选命名参数函数调用
+  enable1Flags(bold: true, hidden: false); //true, false
+  enable1Flags(bold: true); //true, null
+  enable2Flags(bold: false); //false, false
+  //可忽略参数函数调用
+  enable3Flags(true, false); //true, false
+  enable3Flags(
+    true,
+  ); //true, null
+  enable4Flags(true); //true, false
+  enable4Flags(true, true); // true, true
+
+  // 类
+  var p = new Point(100, 200);
+  p.printInfo();
+  Point.factor = 100;
+  Point.printFactor();
+  var p1 = Point.bottom(100);
+  p1.printInfo();
 }
 
 printNum() {
