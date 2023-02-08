@@ -21,13 +21,28 @@ void enable3Flags(bool bold, [bool? hidden]) => print("$bold ,$hidden");
 void enable4Flags(bool bold, [bool hidden = false]) => print("$bold ,$hidden");
 
 class Point {
-  num x, y, z;
+  num x = 0, y = 0;
+  // num x, y, z;
   static num factor = 0;
   // 等同于 this.x = x, this.y = y
-  Point(this.x, this.y) : z = 0;
-  Point.bottom(num x) : this(x, 0); // 重定向构造函数
-  void printInfo() => print("x: $x, y: $y, z: $z");
+  // Point(this.x, this.y);
+  // Point(this.x, this.y) : z = 0;
+  // Point.bottom(num x) : this(x, 0); // 重定向构造函数
+  void printInfo() => print("x: $x, y: $y");
   static void printFactor() => print(factor);
+}
+
+// 继承父类
+class Vector extends Point {
+  num z = 0;
+  @override
+  void printInfo() => print("x: $x, y: $y, z: $z");
+}
+
+// 实现接口
+class Coordinate implements Point {
+  num x = 0, y = 0; // 成员变量需要重新声明
+  void printInfo() => print("x: $x, y: $y"); // 成员函数需要重新定义
 }
 
 main() {
@@ -63,12 +78,27 @@ main() {
   enable4Flags(true, true); // true, true
 
   // 类
-  var p = new Point(100, 200);
+  /*var p = new Point(100, 200);
   p.printInfo();
   Point.factor = 100;
-  Point.printFactor();
-  var p1 = Point.bottom(100);
-  p1.printInfo();
+  Point.printFactor();*/
+  // var p1 = Point.bottom(100);
+  // p1.printInfo();
+  // 复用
+  var v = Vector();
+  v
+    ..x = 1
+    ..y = 2
+    ..z = 3; // 级联运算符，等同于 v.x = 1; v.y = 2; v.z = 3;
+  v.printInfo();
+
+  var c = Coordinate();
+  c
+    ..x = 1
+    ..y = 2;
+  c.printInfo();
+  print(c is Point); // true
+  print(c is Coordinate); // false
 }
 
 printNum() {
