@@ -48,6 +48,15 @@ class Coordinate implements Point {
 // with关键字实现混入
 class Coordinate2 with Point {}
 
+class Vector2 {
+  num x, y;
+  Vector2(this.x, this.y);
+  //重载加法运算符
+  Vector2 operator +(Vector2 v) => Vector2(x + v.x, y + v.y);
+  //重载相等运算符
+  bool operator ==(dynamic v) => x == v.x && y == v.y;
+}
+
 main() {
   // hello world
   print("hello world");
@@ -87,14 +96,14 @@ main() {
   Point.printFactor();*/
   // var p1 = Point.bottom(100);
   // p1.printInfo();
-  // 复用
+  // 继承
   var v = Vector();
   v
     ..x = 1
     ..y = 2
     ..z = 3; // 级联运算符，等同于 v.x = 1; v.y = 2; v.z = 3;
   v.printInfo();
-
+  // 实现
   var c = Coordinate();
   c
     ..x = 1
@@ -102,10 +111,16 @@ main() {
   c.printInfo();
   print(c is Point); // true
   print(c is Coordinate); // true
-
+  // 混入
   var c2 = Coordinate2();
   c2.printInfo();
   print(c2 is Point); // true
+
+  // 运算符
+  var v1 = Vector2(3, 3);
+  var v2 = Vector2(2, 2);
+  var v3 = Vector2(1, 1);
+  print(v1 == (v2 + v3));
 }
 
 printNum() {
